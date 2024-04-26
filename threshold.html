@@ -21,6 +21,7 @@
           required
           size="10"
           placeholder="10"
+          pattern="(^\d*\d$)|(^\d*:$)|(^~:\d*\d$)|(^\d*:\d*$)|(^@\d*:\d*$)"
           minlength="1"
           maxlength="10" />
         <span class="validity"></span>
@@ -34,6 +35,7 @@
           required
           size="10"
           placeholder="20"
+          pattern="(^\d*\d$)|(^\d*:$)|(^~:\d*\d$)|(^\d*:\d*$)|(^@\d*:\d*$)"
           minlength="1"
           maxlength="10"
           required  />
@@ -64,8 +66,8 @@
       <legend>Result:</legend>
       <div>
         <label for="result_status">status: </label><input type="text" id="result_status" value="UNKNOWN" readonly>        
-        <label for="result_perfdata">perfdata: </label><textarea id="result_perfdata" name="result_perfdata" rows="5" cols="33">'label'=value[UOM];[warn];[crit];[min];[max]
-        </textarea>
+        <label for="result_perfdata">perfdata: </label><div id="result_perfdata" name="result_perfdata">'label'=value[UOM];[warn];[crit];[min];[max]
+        </div>
       </div>
     </fieldset>
 
