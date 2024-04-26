@@ -18,18 +18,23 @@ function determine_final_status(warning_status,critical_status) {
 }
 
 function test_thresholds() {
+    //get value from form
     warning_value = document.getElementById("warning").value;
     critical_value = document.getElementById("critical").value;
     value = document.getElementById("value").value;
 
-
+    //check both thresholds
     warning_status=check_threshold(value,warning_value,"warning");
     critical_status=check_threshold(value,critical_value,"critical");
     
-
+    //put value to form
     document.getElementById("result_perfdata").innerHTML = "'label'="+value+";"+warning_value+";"+critical_value+";[min];[max]";
-
     document.getElementById("result_status").value = determine_final_status(warning_status,critical_status);
+}
+
+function check_first_rule(threshold_start,threshold_end) {
+    // start ≤ end
+    return (threshold_start <= threshold_end) ? true:false;
 }
 
 function check_threshold(value,threshold_value,status) {
@@ -72,12 +77,5 @@ function check_threshold(value,threshold_value,status) {
             threshold_reached="no_"+status;
         break;
     }
-function check_first_rule(threshold_start,threshold_end) {
-    // start ≤ end
-    return (threshold_start <= threshold_end) ? true:false;
-}
-
-
-
     return threshold_reached;
 }
