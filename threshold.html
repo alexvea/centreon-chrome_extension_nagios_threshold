@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <h1>"Nagios" type threshold</h1>
+    <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+    <form id="form" target="hiddenFrame">
+    <fieldset>
+      <legend>Options:</legend>
+      <div>
+        <label for="explain">explanation: </label>
+        <input type="checkbox" id="explain" name="explain" />
+      </div>
+      <div>
+        <label for="warning">warning: </label>
+        <input
+          type="text"
+          id="warning"
+          name="warning"
+          required
+          size="10"
+          placeholder="10"
+          minlength="1"
+          maxlength="10" />
+        <span class="validity"></span>
+      </div>
+      <div>
+        <label for="critical">critical: </label>
+        <input
+          type="text"
+          id="critical"
+          name="critical"
+          required
+          size="10"
+          placeholder="20"
+          minlength="1"
+          maxlength="10"
+          required  />
+        <span class="validity"></span>
+      </div>
+
+      <div>
+        <div>
+          <label for="value">value: </label>
+          <input
+            type="text"
+            id="value"
+            name="value"
+            required
+            size="10"
+            placeholder="19"
+            pattern="\d*"
+            minlength="1"
+            maxlength="10" />
+          <span class="validity"></span>
+          <input type="button" id="random" value="Random" />
+        </div>
+        <input type="submit" id="test_button" value="Test" />
+      </div>
+    </fieldset>
+  </form>
+    <fieldset>
+      <legend>Result:</legend>
+      <div>
+        <label for="result_status">status: </label><input type="text" id="result_status" value="UNKNOWN" readonly>        
+        <label for="result_perfdata">perfdata: </label><textarea id="result_perfdata" name="result_perfdata" rows="5" cols="33">'label'=value[UOM];[warn];[crit];[min];[max]
+        </textarea>
+      </div>
+    </fieldset>
+
+    <script src="popup.js"></script>
+  </body>
+  <footer>
+  From Centreon Thewatch community: <a href="https://thewatch.centreon.com/product-how-to-21/how-to-use-the-thresholds-694" target="_blank">How to use the thresholds</a>
+  </footer>
+</html>

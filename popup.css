@@ -1,0 +1,51 @@
+html
+{
+    width: 400px;  /* max: 800px */
+    height: 300px; /* max: 600px */
+}
+
+p,
+label {
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
+}
+
+input {
+  margin: 0.4rem;
+}
+
+textarea {
+    resize: none;
+}
+
+
+div {
+    margin-bottom: 10px;
+    position: relative;
+}
+  
+input + span {
+    padding-right: 30px;
+}
+input {
+    width: 30%;
+    outline: 0;
+    border: 2px solid #B0BEC5;
+}
+  
+input:invalid + span::after {
+    position: absolute;
+    content: "\2718";
+    padding-left: 5px;
+}
+  
+input:valid + span::after {
+    position: absolute;
+    content: "\2713";
+    padding-left: 5px;
+}
+
+input:invalid {
+    border-color: #DD2C00;
+}

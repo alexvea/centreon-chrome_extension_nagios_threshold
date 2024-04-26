@@ -1,0 +1,10 @@
+{
+  "name": "Nagios Threshold",
+  "description": "Help you to test threshold",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "threshold.html",
+    "default_icon": "centreon-icon-color.png"
+  }
+}
