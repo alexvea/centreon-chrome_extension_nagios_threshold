@@ -43,3 +43,5 @@
  
   ![image](https://github.com/alexvea/chrome_extension_nagios_threshold/assets/35368807/ce7d88f8-dde1-4437-9ac3-fcf8ad024767)
 
+  - Negative values not possible at the moment 
+
