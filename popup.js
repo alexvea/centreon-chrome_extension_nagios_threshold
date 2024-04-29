@@ -80,24 +80,24 @@ function check_first_rule(threshold_start,threshold_end) {
 
 function check_threshold(value,threshold_value,status) {
     switch (true) {
-        case /^\d*\d$/.test(threshold_value):
+        case /^(-|)\d*\d$/.test(threshold_value):
         //Range definition: 10 // Generate an alert if x... : < 0 or > 10, (outside the range of {0 .. 10})
             threshold_reached = (parseInt(value) < 0 || parseInt(value) > parseInt(threshold_value)) ? "yes":"no";
             explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is < 0 or > "+threshold_value+", (outside the range of {0 .. "+threshold_value+"}. Triggered : "+threshold_reached+"<br>";
         break;
-        case /^\d*:$/.test(threshold_value):
+        case /^(-|)\d*:$/.test(threshold_value):
         //Range definition: 10: // Generate an alert if x... : < 10, (outside {10 .. ∞})
             threshold_value = threshold_value.substring(0, threshold_value.length - 1);
             threshold_reached = (parseInt(value) < parseInt(threshold_value)) ? "yes":"no";
             explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is < "+threshold_value+", (outside {"+threshold_value+" .. &infin;}. Triggered : "+threshold_reached+"<br>";
         break;
-        case /^~:\d*\d$/.test(threshold_value):
+        case /^~:(-|)\d*\d$/.test(threshold_value):
         //Range definition: ~:10 // Generate an alert if x... : > 10, (outside the range of {-∞ .. 10})
             threshold_value = threshold_value.substring(2);
             threshold_reached = (parseInt(value) > parseInt(threshold_value)) ? "yes":"no";
             explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is > "+threshold_value+", (outside the range of {-&infin; .. "+threshold_value+"}. Triggered : "+threshold_reached+"<br>";
         break;
-        case /^\d*:\d*$/.test(threshold_value):
+        case /^(-|)\d*:(-|)\d*$/.test(threshold_value):
         //Range definition: 10:20 // Generate an alert if x... : < 10 or > 20, (outside the range of {10 .. 20})
             array_threshold_value = threshold_value.split(":");
             threshold_value_left = array_threshold_value[0];
@@ -107,7 +107,7 @@ function check_threshold(value,threshold_value,status) {
             threshold_reached = (parseInt(value) <  parseInt(threshold_value_left) || parseInt(value) > parseInt(threshold_value_right)) ? "yes":"no";
             explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is < "+threshold_value_left+" or > "+threshold_value_right+", (outside the range of {"+threshold_value_left+" .. "+threshold_value_right+"}. Triggered : "+threshold_reached+"<br>";
         break;
-        case /^@\d*:\d*$/.test(threshold_value):
+        case /^@(-|)\d*:(-|)\d*$/.test(threshold_value):
         //Range definition: @10:20 // Generate an alert if x... : <= 10 and >= 20, (inside the range of {10 .. 20})
             array_threshold_value = threshold_value.split(":");
             threshold_value_left = array_threshold_value[0].substring(1);
@@ -118,7 +118,7 @@ function check_threshold(value,threshold_value,status) {
             explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is &#8805; "+threshold_value_left+" and &#8804; "+threshold_value_right+", (inside the range of {"+threshold_value_left+" .. "+threshold_value_right+"}. Triggered : "+threshold_reached+"<br>";
         break;
         default:
-            threshold_reached="no_"+status;
+            threshold_reached="no";
         break;
     }
     return threshold_reached;
