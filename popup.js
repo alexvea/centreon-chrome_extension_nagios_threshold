@@ -1,4 +1,3 @@
-
 document.getElementById("test_button").addEventListener("click", test_thresholds);
 document.getElementById("explain").addEventListener("click", test_thresholds);
 document.getElementById("random").addEventListener("click", random_value);
@@ -14,7 +13,7 @@ function CountDecimalDigits(number)
 {
   var char_array = number.toString().split(""); // split every single char
   var not_decimal = char_array.lastIndexOf(".");
-  return (not_decimal<0)?0:char_array.length - not_decimal - 1;
+  return (not_decimal<0)?0:char_array.length - not_decimal;
 }
 
 
@@ -23,7 +22,7 @@ function randomNumberFromInterval(min, max) { // min and max included
 
         var precision = ( CountDecimalDigits(parseFloat(min)) != 0 && CountDecimalDigits(parseFloat(min)) > CountDecimalDigits(parseFloat(max))) ? CountDecimalDigits(parseFloat(min)):CountDecimalDigits(parseFloat(max)); 
         var generatedNumber = Math.floor(Math.random() * (parseFloat(max) + parseFloat(min))) + Math.floor(Math.random() * (parseFloat(max) * precision - parseFloat(min) * precision) + parseFloat(min)) / (parseFloat(min));
-        generatedNumber = generatedNumber.toFixed(precision);
+        generatedNumber = generatedNumber.toFixed(precision - 1);
     } else {
         var generatedNumber = Math.floor(Math.random() * (parseFloat(max) + parseFloat(min)));
     }
