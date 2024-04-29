@@ -10,23 +10,18 @@ function random_value() {
     test_thresholds();
 }
 
-Number.prototype.countDecimals = function () {
-
-    if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-
-    var str = this.toString();
-    if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
-        return str.split("-")[1] || 0;
-    } else if (str.indexOf(".") !== -1) {
-        return str.split(".")[1].length || 0;
-    }
-    return str.split("-")[1] || 0;
+function CountDecimalDigits(number)
+{
+  var char_array = number.toString().split(""); // split every single char
+  var not_decimal = char_array.lastIndexOf(".");
+  return (not_decimal<0)?0:char_array.length - not_decimal - 1;
 }
 
 
 function randomNumberFromInterval(min, max) { // min and max included
     if (parseFloat(min) % 1 != 0 || parseFloat(max) % 1 != 0) {
-        var precision = ( parseFloat(min).countDecimals() != 0) ? parseFloat(min).countDecimals():parseFloat(max).countDecimals() ; 
+
+        var precision = ( CountDecimalDigits(parseFloat(min)) != 0 && CountDecimalDigits(parseFloat(min)) > CountDecimalDigits(parseFloat(max))) ? CountDecimalDigits(parseFloat(min)):CountDecimalDigits(parseFloat(max)); 
         var generatedNumber = Math.floor(Math.random() * (parseFloat(max) + parseFloat(min))) + Math.floor(Math.random() * (parseFloat(max) * precision - parseFloat(min) * precision) + parseFloat(min)) / (parseFloat(min));
         generatedNumber = generatedNumber.toFixed(precision);
     } else {
