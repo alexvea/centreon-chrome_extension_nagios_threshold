@@ -35,13 +35,12 @@
 - Same rules as : https://nagios-plugins.org/doc/guidelines.html#THRESHOLDFORMAT
   ![image](https://github.com/alexvea/chrome_extension_nagios_threshold/assets/35368807/7672dbc8-1c70-4c58-9c96-5e661f36d4e7)
 
+- Decimals and negatives numbers.
 
   ## Not yet functionning :
 
-  - Not working with decimal numbers.
   - First 3 rules are not yet implemented :
  
   ![image](https://github.com/alexvea/chrome_extension_nagios_threshold/assets/35368807/ce7d88f8-dde1-4437-9ac3-fcf8ad024767)
 
-  - Negative values not possible at the moment 
 
