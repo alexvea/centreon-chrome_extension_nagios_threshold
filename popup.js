@@ -35,6 +35,7 @@ function determine_final_status(warning_status,critical_status) {
     switch (true) {
         case (critical_status == "error" || warning_status == "error"):
             final_status="UNKNOWN";
+            explanation_threshold_content +="Please check the threshold values."
         break;
         case (critical_status == "yes" && warning_status == "yes"):
             final_status="CRITICAL";
