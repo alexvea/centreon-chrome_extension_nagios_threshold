@@ -33,6 +33,9 @@ function randomNumberFromInterval(min, max) { // min and max included
 function determine_final_status(warning_status,critical_status) {
     let final_status="UNKNOWN";
     switch (true) {
+        case (critical_status == "error" || warning_status == "error"):
+            final_status="UNKNOWN";
+        break;
         case (critical_status == "yes" && warning_status == "yes"):
             final_status="CRITICAL";
             explanation_threshold_content +="Both thresholds have been triggered, CRITICAL is more important."
@@ -45,7 +48,6 @@ function determine_final_status(warning_status,critical_status) {
             final_status="WARNING";
             explanation_threshold_content +="WARNING is the current status."
         break;
-
         default:
             final_status="OK";
             explanation_threshold_content +="OK is the current status."
@@ -90,7 +92,7 @@ function test_thresholds() {
 
 function check_first_rule(threshold_start,threshold_end) {
     // start ≤ end
-    return (threshold_start <= threshold_end) ? true:false;
+   return (threshold_start <= threshold_end) ? true:false;
 }
 
 function check_threshold(value,threshold_value,status) {
@@ -117,20 +119,31 @@ function check_threshold(value,threshold_value,status) {
             array_threshold_value = threshold_value.split(":");
             threshold_value_left = array_threshold_value[0];
             threshold_value_right = array_threshold_value[1];
-            //TODO skip if rule first rule not respected
-            console.log(check_first_rule(parseFloat(threshold_value_left),parseFloat(threshold_value_right)));
-            threshold_reached = (parseFloat(value) <  parseFloat(threshold_value_left) || parseFloat(value) > parseFloat(threshold_value_right)) ? "yes":"no";
-            explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is < "+threshold_value_left+" or > "+threshold_value_right+", (outside the range of {"+threshold_value_left+" .. "+threshold_value_right+"}. Triggered : "+threshold_reached+"<br>";
+            //if rule first rule not respected
+            if (check_first_rule(parseFloat(threshold_value_left),parseFloat(threshold_value_right))) {
+                threshold_reached = (parseFloat(value) <  parseFloat(threshold_value_left) || parseFloat(value) > parseFloat(threshold_value_right)) ? "yes":"no";
+                explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is < "+threshold_value_left+" or > "+threshold_value_right+", (outside the range of {"+threshold_value_left+" .. "+threshold_value_right+"}. Triggered : "+threshold_reached+"<br>";
+            } else {
+                threshold_reached = "error";
+                explanation_threshold_content += "Issue with "+threshold_value+" "+status+" threshold."+threshold_value_left+" should be <= to "+threshold_value_right+".<br>"
+            }
+            
         break;
         case /^@(-|)\d*\.?\d*:(-|)\d*\.?\d*$/.test(threshold_value):
         //Range definition: @10:20 // Generate an alert if x... : <= 10 and >= 20, (inside the range of {10 .. 20})
             array_threshold_value = threshold_value.split(":");
             threshold_value_left = array_threshold_value[0].substring(1);
             threshold_value_right = array_threshold_value[1];
-            //TODO skip if rule first rule not respected
-            console.log(check_first_rule(parseFloat(threshold_value_left),parseFloat(threshold_value_right)));
-            threshold_reached = (parseFloat(value) >=  parseFloat(threshold_value_left) && parseFloat(value) <= parseFloat(threshold_value_right)) ? "yes":"no";
-            explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is &#8805; "+threshold_value_left+" and &#8804; "+threshold_value_right+", (inside the range of {"+threshold_value_left+" .. "+threshold_value_right+"}. Triggered : "+threshold_reached+"<br>";
+          
+            //if rule first rule not respected
+            if (check_first_rule(parseFloat(threshold_value_left),parseFloat(threshold_value_right))) {
+                threshold_reached = (parseFloat(value) >=  parseFloat(threshold_value_left) && parseFloat(value) <= parseFloat(threshold_value_right)) ? "yes":"no";
+                explanation_threshold_content += "Range definition: "+threshold_value+" for "+status+ " threshold. Generate an alert if current value "+value+" is &#8805; "+threshold_value_left+" and &#8804; "+threshold_value_right+", (inside the range of {"+threshold_value_left+" .. "+threshold_value_right+"}. Triggered : "+threshold_reached+"<br>";
+            } else {
+                threshold_reached = "error";
+                explanation_threshold_content += "Issue with "+threshold_value+" "+status+" threshold."+threshold_value_left+" should be <= to "+threshold_value_right+".<br>"
+            }
+           
         break;
         default:
             threshold_reached="no";
